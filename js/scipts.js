@@ -20,7 +20,7 @@ carouselButton.addEventListener('click', function () {
     }
 });
 
-    const fetchWeather = async() => {
+    async function fetchWeather() {
     const apiKey = process.env.OPEN_WEATHER_API_KEY;
     const city = 'Mooresville';
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
@@ -29,12 +29,13 @@ carouselButton.addEventListener('click', function () {
         const response = await fetch(url);
         const data = await response.json();
         console.log(data); // Log the data to the console
+        displayWeather(data);
     } catch (error) {
         console.error('Error fetching weather data:', error);
     }
 
 }
-console.log(fetchWeather);
+
 
 function displayWeather(weatherData) {
     // Extract the relevant data from the weatherData object
@@ -52,10 +53,7 @@ function displayWeather(weatherData) {
     const weatherDescription = document.getElementById('weather-description');
     weatherDescription.textContent = description;
 
-    response.json().then(data => {
-        console.log(data); // Log the response data for reference
-        displayWeather(data); // Call the displayWeather function
-    }).catch(error => {
-        console.error('Error fetching weather data:', error);
-    });
+
 }
+
+fetchWeather()
